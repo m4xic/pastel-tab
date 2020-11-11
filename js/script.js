@@ -15,18 +15,7 @@ $(document).ready(function() {
 
   //default values
   auto = false;
-  speed = 3;
-
-  //setup stored variables
-  chrome.storage.sync.get('auto', function(data) {
-    auto = data.auto || auto;
-    updateButtons();
-  });
-
-  chrome.storage.sync.get('speed', function(data) {
-    speed = data.speed || speed;
-    updateButtons();
-  })
+  speed = 1;
 
   $('#gen').click(function(e) {
     e.preventDefault();
@@ -47,7 +36,7 @@ $(document).ready(function() {
   $('#tog').click(function(e) {
     e.preventDefault();
     auto = !auto; //invert auto
-    setValues(); //save values to Chrome
+    speed = 1;
     updateButtons();
   });
 
@@ -70,10 +59,10 @@ function clock() {
 
 function updateButtons() {
   if (!auto) {
-    $('#auto-check').html('');
+    $('#auto-check').html('check_box_outline_blank');
     $('#gen').html('generate');
   } else {
-    $('#auto-check').html('check');
+    $('#auto-check').html('check_box');
 
     setSpeedBars();
 
@@ -89,11 +78,6 @@ function setSpeedBars() {
   var sbars = "|";
   sbars = sbars.repeat(speed);
   $('#gen').html('speed: ' + sbars);
-}
-
-function setValues() {
-  chrome.storage.sync.set({'auto': auto });
-  chrome.storage.sync.set({'speed': speed });
 }
 
 function changeColor() {
